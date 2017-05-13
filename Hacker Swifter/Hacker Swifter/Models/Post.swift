@@ -98,7 +98,7 @@ import Foundation
     
     open func encode(with aCoder: NSCoder) {
         for key in serialization.values {
-            if let value: AnyObject = self.value(forKey: key.rawValue) as AnyObject {
+            if let value = self.value(forKey: key.rawValue) {
                 aCoder.encode(value, forKey: key.rawValue)
             }
         }
@@ -135,7 +135,7 @@ public extension Post {
             },
             completion: {(object, error, local) in
                 if let realObject: AnyObject = object {
-                    completion(realObject as! [Post], error, local)
+                    completion(realObject as? [Post], error, local)
                 }
                 else {
                     completion(nil, error, local)
@@ -163,7 +163,7 @@ public extension Post {
             },
             completion: {(object, error, local) in
                 if let realObject: AnyObject = object {
-                    completion(realObject as! [Post], error, local)
+                    completion(realObject as? [Post], error, local)
                 }
                 else {
                     completion(nil, error, local)
@@ -193,7 +193,7 @@ public extension Post {
             return nil
             })
             { (object, error, local) -> Void in
-                completion(object as! Post, error, local)
+                completion(object as? Post, error, local)
         }
     }
 }

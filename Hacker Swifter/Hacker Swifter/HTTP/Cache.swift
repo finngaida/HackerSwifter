@@ -85,8 +85,6 @@ open class DiskCache: Cache {
             return cachePath
         }
     }
-    
-    fileprivate let priority = DispatchQueue.GlobalQueuePriority.default
 
     open class var sharedDiskCache: Cache {
         return _DiskCache
@@ -106,7 +104,7 @@ open class DiskCache: Cache {
     
     open func objectForKey(_ key: String, completion: @escaping cacheCompletion) {
         if (self.objectExist(key)) {
-            DispatchQueue.global(priority: self.priority).async(execute: { ()->() in
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: { ()->() in
                 let object: AnyObject! =  NSKeyedUnarchiver.unarchiveObject(withFile: self.fullPath(key)) as AnyObject
                 DispatchQueue.main.async(execute: { ()->() in
                     completion(object)

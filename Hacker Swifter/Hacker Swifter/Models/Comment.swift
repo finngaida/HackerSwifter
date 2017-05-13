@@ -63,7 +63,7 @@ import Foundation
     
     open func encode(with aCoder: NSCoder)  {
         for key in serialization.values {
-            if let value: AnyObject = self.value(forKey: key.rawValue) as AnyObject {
+            if let value = self.value(forKey: key.rawValue) {
                 aCoder.encode(value, forKey: key.rawValue)
             }
         }
@@ -99,7 +99,7 @@ public extension Comment {
             },
             completion: {(object, error, local) in
                 if let realObject: AnyObject = object {
-                    completion(realObject as! [Comment], error, local)
+                    completion(realObject as? [Comment], error, local)
                 }
                 else {
                     completion(nil, error, local)

@@ -54,7 +54,7 @@ open class Fetcher {
         let task = _Fetcher.session.dataTask(with: URL(string: path)! , completionHandler: {(data: Data?, response, error) in
             if !(error != nil) {
                 if let realData = data {
-                    let object: AnyObject! = parsing(NSString(data: realData, encoding: String.Encoding.utf8.rawValue) as! String)
+                    let object: AnyObject! = parsing(NSString(data: realData, encoding: String.Encoding.utf8.rawValue)! as String)
                     if let realObject: AnyObject = object {
                         Cache.sharedCache.setObject(realObject, key: cacheKey)
                     }
@@ -108,9 +108,7 @@ open class Fetcher {
                 if error == nil {
                     let object: AnyObject! = parsing(JSON as AnyObject)
                     if let object: AnyObject = object {
-                        if let realObject: AnyObject = object {
-                            Cache.sharedCache.setObject(realObject, key: cacheKey)
-                        }
+                        Cache.sharedCache.setObject(object, key: cacheKey)
                         DispatchQueue.main.async(execute: { ()->() in
                             completion(object, nil, false)
                         })

@@ -15,6 +15,6 @@ extension Scanner {
         self.scanUpTo(startTag, into: &temp)
         self.scanString(startTag, into: &temp)
         self.scanUpTo(endTag, into: &result)
-        return result as! String
+        return result! as String
     }
 }
